@@ -437,7 +437,30 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sub
 .flexslider .flex-control-paging li a.flex-active {
   background: #737F97
 }
-
+.flexslider .slides img {
+height: auto;
+-moz-user-select: none;
+height: 455px;
+width: 210px;
+border-radius: 15px;
+vertical-align: top;
+position: relative;
+top: -14px;
+left: 10px;
+}
+@media only screen and (max-width:767px){
+.flexslider .slides img {
+height: auto;
+-moz-user-select: none;
+height: 355px;
+width: 165px;
+border-radius: 15px;
+vertical-align: top;
+position: relative;
+top: -14px;
+left: 10px;
+}
+}
 .flexslider .slides li {
   position: relative
 }
