@@ -1,2 +1,2 @@
-# quickroute-site
-Public website for QuickRoute
+# MiniCarta-site
+Public Website for MiniCarta mobile app
