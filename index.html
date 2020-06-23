@@ -22,6 +22,60 @@
     <link rel="stylesheet" href="assets/plugins/animate-css/animate.min.css">
     <!-- Theme CSS -->
     <link id="theme-style" rel="stylesheet" href="assets/css/theme-7.css">
+
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+    
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-app.js"></script>
+    
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-analytics.js"></script>
+    
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-firestore.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/ui/4.5.1/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.5.1/firebase-ui-auth.css" />
+
+    <script type="text/javascript">
+
+        var firebaseConfig = {
+            apiKey: "AIzaSyAtXAdEDXBk95o2_MzLUReIzyct5URQlk8",
+            authDomain: "quickroute-84835.firebaseapp.com",
+            databaseURL: "https://quickroute-84835.firebaseio.com",
+            projectId: "quickroute-84835",
+            storageBucket: "quickroute-84835.appspot.com",
+            messagingSenderId: "82237107814",
+            appId: "1:82237107814:web:ddfa05878c2c184ad447a7",
+            measurementId: "G-J2J2G9G5LN"
+        }
+
+        // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+
+        // FirebaseUI config.
+        var uiConfig = {
+            signInSuccessUrl: "purchase/index.html",
+            signInOptions: [
+                // Leave the lines as is for the providers you want to offer your users.
+                firebase.auth.EmailAuthProvider.PROVIDER_ID
+            ],
+            // tosUrl and privacyPolicyUrl accept either url string or a callback
+            // function.
+            // Terms of service url/callback.
+            tosUrl: '<your-tos-url>',
+            // Privacy policy url/callback.
+            privacyPolicyUrl: function () {
+                window.location.assign('<your-privacy-policy-url>');
+            }
+        };
+
+        // Initialize the FirebaseUI Widget using Firebase.
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        // The start method will wait until the DOM is loaded.
+        ui.start('#firebaseui-auth-container', uiConfig);
+    </script>
 </head>
 
 <body>
@@ -187,7 +241,7 @@
                     <div class="content">
                         <h3 class="title">Real time map</h3>
                         <p>All road obstructions and hazards tagged by users appear on everyone's map in real time. Get
-                            updated situational awareness on road objstructions, hazards, accidents, and other items
+                            updated situational awareness on road obstructions, hazards, accidents, and other items
                             posted by first responders</p>
                     </div>
                     <!--//content-->
@@ -543,6 +597,9 @@
     </footer>
     <!--//footer-->
 
+
+
+
     <!-- Sign-Up Modal-->
     <div class="modal modal-feature" id="feature-modal-1" tabindex="-1" role="dialog" aria-labelledby="featureModalLabel-1"
         aria-hidden="true">
@@ -550,11 +607,14 @@
             <div class="modal-content shadow-lg border-0">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 id="featureModalLabel-1" class="modal-title text-center">Automated QuickRoute Pro Sign-up Coming Soon...</h4>
+                    <h4 id="featureModalLabel-1" class="modal-title text-center">Sign in using your QuickRoute credentials below to proceed to purchase QuickRoute Pro</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Please reach out to <a href="mailto:quickroute_support@azimuth1.com?subject=QuickRoute support question">quickroute_support@azimuth1.com</a> to request a license 
+                    <p>If you haven't all ready downloaded and signed into QuickRoute Mobile (free) please do so <a href="https://apps.apple.com/us/app/quickroute-mobile/id1444770453">here</a> first.
                 </div>
+                <!-- The surrounding HTML is left untouched by FirebaseUI.
+                         Your app may use that space for branding, controls and other customizations.-->
+                <div id="firebaseui-auth-container"></div>
                 <!--//modal-body-->
             </div>
             <!--//modal-content-->
@@ -581,6 +641,7 @@
     <script type="text/javascript" src="assets/js/main.js"></script>
     <!--[if !IE]>-->
     <script type="text/javascript" src="assets/js/animations.js"></script>
+    <script type="text/javascript" src="index.js"></script>
     <!--<![endif]-->
 </body>
 
