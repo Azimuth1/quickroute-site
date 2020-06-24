@@ -63,11 +63,11 @@
         var uiConfig = {
             callbacks: {
                 signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-                    mountPurchaseButton()
+                    proceedToCheckout()
                     return false
                 },
             },
-            signInSuccessUrl: "purchase/index.html",
+            signInSuccessUrl: "",
             signInOptions: [
                 firebase.auth.EmailAuthProvider.PROVIDER_ID
             ]
@@ -98,34 +98,24 @@
                 displayError.textContent = result.error.message;
             }
         };
-        function mountPurchaseButton() {
-            console.log('calling mountPurchaseButon')
-            
-            const purchaseButton = document.querySelector("#purchase-button")
-            purchaseButton.style.display = "block"
 
-            console.log('purchaseButton: ', purchaseButton);
-            if (purchaseButton) {
-                purchaseButton.addEventListener("click", function (e) {
-                    var mode = e.target.dataset.checkoutMode;
-                    var priceId = e.target.dataset.priceId;
-                    var items = [{ price: priceId, quantity: 1 }];
+        function proceedToCheckout() {
+            var mode = "subscription";
+            var priceId = "price_1GxIOkBEwyfG7IulWcY5BrSp";
+            var items = [{ price: priceId, quantity: 1 }];
 
-                    // Make the call to Stripe.js to redirect to the checkout page
-                    // with the sku or plan ID.
-                    stripe
-                        .redirectToCheckout({
-                            mode: mode,
-                            lineItems: items,
-                            successUrl: "https://quickroute.us",//DOMAIN + "success.html?session_id={CHECKOUT_SESSION_ID}",
-                            cancelUrl: "https://quickroute.us",//DOMAIN + "canceled.html?session_id={CHECKOUT_SESSION_ID}",
-                        })
-                        .then(handleResult);
+            // Make the call to Stripe.js to redirect to the checkout page
+            // with the sku or plan ID.
+            stripe
+                .redirectToCheckout({
+                    mode: mode,
+                    lineItems: items,
+                    successUrl: "https://quickroute.us",//DOMAIN + "success.html?session_id={CHECKOUT_SESSION_ID}",
+                    cancelUrl: "https://quickroute.us",//DOMAIN + "canceled.html?session_id={CHECKOUT_SESSION_ID}",
                 })
-            }
+                .then(handleResult);
         }
         
-
     </script>
 </head>
 
@@ -667,15 +657,6 @@
                 <div class="modal-body">
                     <p>Don't have an account? Download the app and create one
                      <a href="https://apps.apple.com/us/app/quickroute-mobile/id1444770453">here.</a>
-                </div>
-
-                <div>
-                    <section class="container">
-                        <h1>Purchase QuickRoute Pro Subscription</h1>
-                        <button id="purchase-button" display="none" data-checkout-mode="subscription" data-price-id="price_1GxIOkBEwyfG7IulWcY5BrSp">
-                            $10 per month
-                        </button>
-                    </section>
                 </div>
                 
                 <!--//modal-body-->
