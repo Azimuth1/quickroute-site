@@ -35,7 +35,7 @@
           </section>
           <section class="container">
             <h1>Purchase QuickRoute Pro Subscription</h1>
-            <button data-checkout-mode="subscription" data-price-id="price_1GxIOkBEwyfG7IulWcY5BrSp">
+            <button id="purchase-button" data-checkout-mode="subscription" data-price-id="price_1GxIOkBEwyfG7IulWcY5BrSp">
               $10 per month
             </button>
           </section>
@@ -50,12 +50,6 @@
       // Replace with the domain you want your users to be redirected back to after payment
       var DOMAIN = location.href.replace(/[^/]*$/, "");
 
-      if (PUBLISHABLE_KEY === "pk_test_51GxIHMBEwyfG7IuldjjjV1afJnXTxyShte1yq9QmnnNRtLXGxSgabQjRF4qxawRhNlf4vamm4OZAe8xNzlRCRxxo00kt06Fx4X") {
-        console.log(
-          "Replace the hardcoded publishable key with your own publishable key: https://dashboard.stripe.com/test/apikeys"
-        );
-      }
-
       var stripe = Stripe(PUBLISHABLE_KEY);
 
       // Handle any errors from Checkout
@@ -66,6 +60,27 @@
         }
       };
 
+
+
+      const purchaseButton = document.querySelector("#purchase-button")
+
+      purchaseButton.addEventListener("click", function (e) {
+          var mode = e.target.dataset.checkoutMode;
+          var priceId = e.target.dataset.priceId;
+          var items = [{ price: priceId, quantity: 1 }];
+
+          // Make the call to Stripe.js to redirect to the checkout page
+          // with the sku or plan ID.
+          stripe
+            .redirectToCheckout({
+              mode: mode,
+              lineItems: items,
+              successUrl: "https://quickroute.us",//DOMAIN + "success.html?session_id={CHECKOUT_SESSION_ID}",
+              cancelUrl: "https://quickroute.us",//DOMAIN + "canceled.html?session_id={CHECKOUT_SESSION_ID}",
+            })
+            .then(handleResult);
+        });
+      /*
       document.querySelectorAll("button").forEach(function (button) {
         button.addEventListener("click", function (e) {
           var mode = e.target.dataset.checkoutMode;
@@ -87,6 +102,7 @@
             .then(handleResult);
         });
       });
+      */
     </script>
   </body>
 </html>

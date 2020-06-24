@@ -38,8 +38,13 @@
     <script src="https://www.gstatic.com/firebasejs/ui/4.5.1/firebase-ui-auth.js"></script>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.5.1/firebase-ui-auth.css" />
 
+    <script src="https://js.stripe.com/v3/"></script>
+
     <script type="text/javascript">
 
+        /* ++++++++++++++++++++++++++++++++++++
+        Start Firebase Code
+        +++++++++++++++++++++++++++++++++++++ */
         var firebaseConfig = {
             apiKey: "AIzaSyA4YEgSkrj1REdlXAyZFvAvazn3yJpt9AE",
             authDomain: "quickroute-84835.firebaseapp.com",
@@ -56,25 +61,71 @@
 
         // FirebaseUI config.
         var uiConfig = {
+            callbacks: {
+                signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+                    mountPurchaseButton()
+                    return false
+                },
+            },
             signInSuccessUrl: "purchase/index.html",
             signInOptions: [
-                // Leave the lines as is for the providers you want to offer your users.
                 firebase.auth.EmailAuthProvider.PROVIDER_ID
-            ],
-            // tosUrl and privacyPolicyUrl accept either url string or a callback
-            // function.
-            // Terms of service url/callback.
-            tosUrl: '<your-tos-url>',
-            // Privacy policy url/callback.
-            privacyPolicyUrl: function () {
-                window.location.assign('<your-privacy-policy-url>');
-            }
+            ]
         };
 
         // Initialize the FirebaseUI Widget using Firebase.
         var ui = new firebaseui.auth.AuthUI(firebase.auth());
         // The start method will wait until the DOM is loaded.
         ui.start('#firebaseui-auth-container', uiConfig);
+
+        /* ===================================
+            End Firebase Code
+            =================================== */
+
+
+        /* ++++++++++++++++++++++++++++++++++++
+            Start Stripe Code
+            +++++++++++++++++++++++++++++++++++++ */
+        var PUBLISHABLE_KEY = "pk_test_51GxIHMBEwyfG7IuldjjjV1afJnXTxyShte1yq9QmnnNRtLXGxSgabQjRF4qxawRhNlf4vamm4OZAe8xNzlRCRxxo00kt06Fx4X";
+        var DOMAIN = location.href.replace(/[^/]*$/, "");
+
+        var stripe = Stripe(PUBLISHABLE_KEY);
+
+        // Handle any errors from Checkout
+        var handleResult = function (result) {
+            if (result.error) {
+                var displayError = document.getElementById("error-message");
+                displayError.textContent = result.error.message;
+            }
+        };
+        function mountPurchaseButton() {
+            console.log('calling mountPurchaseButon')
+            
+            const purchaseButton = document.querySelector("#purchase-button")
+            purchaseButton.style.display = "block"
+
+            console.log('purchaseButton: ', purchaseButton);
+            if (purchaseButton) {
+                purchaseButton.addEventListener("click", function (e) {
+                    var mode = e.target.dataset.checkoutMode;
+                    var priceId = e.target.dataset.priceId;
+                    var items = [{ price: priceId, quantity: 1 }];
+
+                    // Make the call to Stripe.js to redirect to the checkout page
+                    // with the sku or plan ID.
+                    stripe
+                        .redirectToCheckout({
+                            mode: mode,
+                            lineItems: items,
+                            successUrl: "https://quickroute.us",//DOMAIN + "success.html?session_id={CHECKOUT_SESSION_ID}",
+                            cancelUrl: "https://quickroute.us",//DOMAIN + "canceled.html?session_id={CHECKOUT_SESSION_ID}",
+                        })
+                        .then(handleResult);
+                })
+            }
+        }
+        
+
     </script>
 </head>
 
@@ -520,7 +571,7 @@
                                         <li><i class="fas fa-check"></i>email support</li>
                                         <li class="disabled"><i class="fas fa-times"></i>24/7 phone support</li>
                                     </ul>
-                                    <button class="btn btn-theme btn-block" data-toggle="modal" data-target="#feature-modal-1">Sign Up</button>
+                                    <button class="btn btn-theme btn-block" data-toggle="modal" data-target="#purchase-sign-in-modal">Sign Up</button>
 
                                 </div>
                                 <!--//content-->
@@ -601,20 +652,32 @@
 
 
     <!-- Sign-Up Modal-->
-    <div class="modal modal-feature" id="feature-modal-1" tabindex="-1" role="dialog" aria-labelledby="featureModalLabel-1"
+    <div class="modal modal-feature" id="purchase-sign-in-modal" tabindex="-1" role="dialog" aria-labelledby="featureModalLabel-1"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content shadow-lg border-0">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 id="featureModalLabel-1" class="modal-title text-center">Sign in using your QuickRoute credentials below to proceed to purchase QuickRoute Pro</h4>
-                </div>
-                <div class="modal-body">
-                    <p>If you haven't all ready downloaded and signed into QuickRoute Mobile (free) please do so <a href="https://apps.apple.com/us/app/quickroute-mobile/id1444770453">here</a> first.
+                    <h4 id="featureModalLabel-1" class="modal-title text-center"></h4>
                 </div>
                 <!-- The surrounding HTML is left untouched by FirebaseUI.
                          Your app may use that space for branding, controls and other customizations.-->
                 <div id="firebaseui-auth-container"></div>
+                <div></br></div>
+                <div class="modal-body">
+                    <p>Don't have an account? Download the app and create one
+                     <a href="https://apps.apple.com/us/app/quickroute-mobile/id1444770453">here.</a>
+                </div>
+
+                <div>
+                    <section class="container">
+                        <h1>Purchase QuickRoute Pro Subscription</h1>
+                        <button id="purchase-button" display="none" data-checkout-mode="subscription" data-price-id="price_1GxIOkBEwyfG7IulWcY5BrSp">
+                            $10 per month
+                        </button>
+                    </section>
+                </div>
+                
                 <!--//modal-body-->
             </div>
             <!--//modal-content-->
