@@ -1273,33 +1273,33 @@ select {
   opacity: 1;
 }
 
-.pricing {
+.plans {
   background-color: #f5f5f5;
   padding: 80px 0;
 }
 
-.pricing .title {
+.plans .title {
   margin-bottom: 60px;
   margin-top: 0;
 }
 
-.pricing .item {
+.plans .item {
   padding: 30px 15px;
 }
 
-.pricing .item.best-buy {
+.plans .item.best-buy {
   top: -15px;
 }
 
-.pricing .item.best-buy .heading {
+.plans .item.best-buy .heading {
   padding-top: 45px;
 }
 
-.pricing .item.best-buy .content {
+.plans .item.best-buy .content {
   padding-bottom: 45px;
 }
 
-.pricing .item .item-inner {
+.plans .item .item-inner {
   background: #fff;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -1312,7 +1312,7 @@ select {
   position: relative;
 }
 
-.pricing .item .heading {
+.plans .item .heading {
   margin-top: 0;
   padding: 30px 15px;
   background: #cbcfd8;
@@ -1334,19 +1334,19 @@ select {
   background-clip: padding-box;
 }
 
-.pricing .item .heading .title {
+.plans .item .heading .title {
   margin-bottom: 30px;
   color: #303641;
   padding-bottom: 15px;
   font-size: 18px;
 }
 
-.pricing .item .content {
+.plans .item .content {
   padding: 30px 15px;
   padding-top: 80px;
 }
 
-.pricing .item .price-figure {
+.plans .item .price-figure {
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
@@ -1368,20 +1368,20 @@ select {
   margin-left: -60px;
 }
 
-.pricing .item .price-figure .number {
+.plans .item .price-figure .number {
   font-size: 28px;
 }
 
-.pricing .item .price-figure .unit {
+.plans .item .price-figure .unit {
   font-weight: 300;
 }
 
-.pricing .item .price-figure .currency {
+.plans .item .price-figure .currency {
   top: -5px;
   position: relative;
 }
 
-.pricing .item .ribbon {
+.plans .item .ribbon {
   position: absolute;
   top: -4px;
   right: -4px;
@@ -1390,7 +1390,7 @@ select {
   overflow: hidden;
 }
 
-.pricing .item .ribbon .text {
+.plans .item .ribbon .text {
   font-family: "Lato", arial, sans-serif;
   position: relative;
   left: -8px;
@@ -1409,8 +1409,8 @@ select {
   -o-transform: rotate(45deg) translate3d(0, 0, 0);
 }
 
-.pricing .item .ribbon .text:before,
-.pricing .item .ribbon .text:after {
+.plans .item .ribbon .text:before,
+.plans .item .ribbon .text:after {
   content: "";
   position: absolute;
   bottom: -5px;
@@ -1419,33 +1419,33 @@ select {
   border-right: 5px solid transparent;
 }
 
-.pricing .item .ribbon .text:before {
+.plans .item .ribbon .text:before {
   left: 0;
 }
 
-.pricing .item .ribbon .text:after {
+.plans .item .ribbon .text:after {
   right: 0;
 }
 
-.pricing .item .feature-list {
+.plans .item .feature-list {
   margin-bottom: 30px;
 }
 
-.pricing .item .feature-list li {
+.plans .item .feature-list li {
   border-bottom: 1px solid #efefef;
   padding: 10px;
 }
 
-.pricing .item .feature-list li .svg-inline--fa {
+.plans .item .feature-list li .svg-inline--fa {
   margin-right: 5px;
   color: #737f97;
 }
 
-.pricing .item .feature-list li.disabled {
+.plans .item .feature-list li.disabled {
   color: #999;
 }
 
-.pricing .item .feature-list li.disabled .svg-inline--fa {
+.plans .item .feature-list li.disabled .svg-inline--fa {
   color: #999;
 }
 
